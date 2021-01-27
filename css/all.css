@@ -1,0 +1,239 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#bmiCalculatorArea, footer{
+    margin: auto;
+}
+
+#bmiCalculatorArea{
+    width: 1024px;
+    height: 300px;
+    background-color: #424242;
+    padding: 74px 214px 74px 173px;
+}
+
+#bmiCalculatorContainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+#logo{
+    width: 117px;
+    height: 117px;
+    margin-top: 20px;
+}
+
+
+#inputBlock{
+    width: 250px;
+    height: 100%;
+    font-size: 18px;
+    color: #FFD366;
+    margin-left: 97px;
+}
+
+#inputBlock input{
+    width: 100%;
+    height: 40px;
+    padding: 0px 5px 0px 5px;
+    background: rgba(255,255,255,0.18);
+    border: 2px solid #FFD366;
+    border-radius: 10px;
+    color: #fff;
+    margin-top: 5px;
+}
+
+#inputBlock > input{
+    margin-bottom: calc(162px - 139px);
+}
+
+#inputBlock input:focus{
+    outline: none;
+}
+
+#buttonAndResultBlock{
+    width: 123px;
+    height: 123px;
+    margin-top: 20px;
+    margin-left: calc(400px - 97px - 250px);
+}
+
+#submitButton{
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 123px;
+    background: #FFD366;
+}
+
+#submitButton:focus{
+    outline: none;
+}
+
+#submitButton:hover{
+    background: #DEA921;
+    cursor: pointer;
+}
+
+.resultCircle{
+    width: 100%;
+    height: 100%;
+    border-radius: 123px;
+    border: 6px solid;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    display: none;
+}
+
+.resultBlock{
+    color: #FFFFFF;
+    font-size: 14px;
+    align-self: center;
+    text-align: center;
+}
+
+.resultBlock div{
+    font-size: 32px;
+}
+
+.statusInCircle{
+    min-width: 150px;
+    font-size: 32px;
+    position: absolute;
+    top: 32px;
+    left: calc(100% + 18px);
+}
+
+#restartButton{
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    border: 3px solid #424242;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    display: flex;
+}
+
+#restartButton:focus{
+    outline: none;
+}
+
+.restartButton img{
+    justify-self: center;
+    align-self: center;
+}
+
+#bmiResultsListArea{
+    width: 1024px;
+    min-height: 300px;
+    background-color: lightgrey;
+    margin: auto;
+    text-align: center;
+}
+
+.bmiResultsList{
+    width: 100%;
+    min-height: 72px;
+}
+
+#bmiResultsListArea{
+    padding-top: 48px;
+}
+
+#bmiResultsListArea h1{
+    margin-bottom: 36px;
+}
+
+.resultRow{
+    width: 624px;
+    height: 62px;
+    background: #FFFFFF;
+    margin: auto;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px
+}
+
+.statusInRow{
+    min-width: 80px;
+    height: 20px;
+    margin: 21px 60px 21px 19px;
+    font-size: 20px;
+    text-align: start;
+}
+
+.dataBlock{
+    width: 260px;
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 40px;
+}
+
+.dataItem{
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.dataTitle{
+    font-size: 12px;
+    height: 12px;
+    margin-right: 7px;
+    align-self: center;
+}
+
+#dateBlock{
+    font-size: 12px;
+    margin-right: 40px;
+}
+
+#bmiResultsList a{
+    font-size: 14px;
+}
+
+#bmiResultsListArea button{
+    border: none;
+    width: 90px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgb(179, 1, 1);
+    font-size: 14px;
+    color: #ffffff;
+    cursor: pointer;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+#bmiResultsListArea button:hover{
+    opacity: 0.7;
+}
+
+#bmiResultsListArea button:focus{
+    outline: none;
+}
+
+#bmiResultsListArea button:active{
+    transform: translate(0px, 3px);
+}
+
+footer{
+    width: 1024px;
+    height: 90px;
+    background-color: #FFD366;
+}
+
+footer img{
+    width: 55px;
+    height: 55px;
+    display: block;
+    margin: auto;
+    position: relative;
+    top: 18px;
+}
