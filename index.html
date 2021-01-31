@@ -13,10 +13,10 @@
         <div id="bmiCalculatorContainer">
             <img src="./img/BMICLogo.png" alt="" id="logo">
             <div id="inputBlock">
-                身高 cm<br>
-                <input type="number" placeholder="請輸入身高（30～250）" id="heightField" min="30" max="250"><br>
-                體重 kg<br>
-                <input type="number" placeholder="請輸入體重（0.3～300）" id="weightField" min="0.3" max="300">
+                <span id="heightTtile">身高 cm</span>
+                <input type="number" placeholder="請輸入身高（30～250）" id="heightField" min="30" max="250" required><br>
+                <span id="weightTtile">體重 kg</span>
+                <input type="number" placeholder="請輸入體重（0.3～300）" id="weightField" min="0.3" max="300" required>
             </div>
             <div id="buttonAndResultBlock">
                 <button id="submitButton">看結果</button>

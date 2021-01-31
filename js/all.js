@@ -1,11 +1,31 @@
 // 變數宣告
-var submitButton = document.querySelector('#submitButton');
-var resultCircle = document.querySelector('.resultCircle');
-var heightField = document.querySelector('#heightField');
-var weightField = document.querySelector('#weightField');
-var bmiResultsList = document.querySelector('#bmiResultsList');
-var deleteAllButton = document.querySelector('#deleteAllButton');
-var storageArr = JSON.parse(localStorage.getItem('storageData')) || [];
+const submitButton = document.querySelector('#submitButton');
+const resultCircle = document.querySelector('.resultCircle');
+const heightField = document.querySelector('#heightField');
+const weightField = document.querySelector('#weightField');
+const bmiResultsList = document.querySelector('#bmiResultsList');
+const deleteAllButton = document.querySelector('#deleteAllButton');
+let bmiStatusColors = {
+    underWeight: {
+        color: '#31BAF9'
+    },
+    normalRange: {
+        color: '#86D73E'
+    },
+    obeseLevel01: {
+        color: '#FF982D'
+    },
+    obeseLevel02: {
+        color: '#FF1200'
+    },
+    obeseLevel03: {
+        color: '#FF1200'
+    },
+    obeseLevel04: {
+        color: '#FF1200'
+    },
+}
+let storageArr = JSON.parse(localStorage.getItem('storageData')) || [];
 
 // 監聽事件
 submitButton.addEventListener('click', submitCalculation);
@@ -37,61 +57,39 @@ document.addEventListener('keyup', function (e) {
 // 紀錄列表初始更新
 updateResultsList();
 
-// 函式：送出BMI計算
+// 函式：遞交BMI計算後，進行畫面渲染和本地存儲
 function submitCalculation() {
-
     let weight = weightField.value;
     let height = heightField.value;
+    let blankWarns = document.querySelectorAll('.blankWarn');
 
-    if (!!height && !!weight) {
-        let status;
-        let statusColor;
-        let bmi = (weight / Math.pow((height / 100), 2)).toFixed(2);
+    blankWarns.forEach((blankWarn) => blankWarn.remove());
+
+    if (!!weight && !!height) {
         let dateNow = new Date();
         let dateNowFormat = `${dateNow.getFullYear()}-${dateNow.getMonth() + 1}-${dateNow.getDate()}`;
-
-        switch (!!bmi) {
-            case (bmi < 18.5):
-                status = '過輕';
-                statusColor = '#31BAF9';
-                break;
-            case (bmi >= 18.5 && bmi < 24):
-                status = '理想';
-                statusColor = '#86D73E';
-                break;
-            case (bmi >= 24 && bmi < 27):
-                status = '過重';
-                statusColor = '#FF982D';
-                break;
-            case (bmi >= 27 && bmi < 30):
-                status = '輕度肥胖';
-                statusColor = '#FF1200';
-                break;
-            case (bmi >= 30 && bmi < 35):
-                status = '中度肥胖';
-                statusColor = '#FF1200';
-                break;
-            case (bmi > 35):
-                status = '重度肥胖';
-                statusColor = '#FF1200';
-                break;
+        let storageObj = {
+            date: dateNowFormat,
+            weight: weight,
+            height: height,
         }
+        let countBMIStatus = countBMI(storageObj);
 
         resultCircle.innerHTML = `
                 <div class="resultBlock">
-                    <div>${bmi}</div>
+                    <div>${storageObj.bmi}</div>
                     BMI
                 </div>
                     <button id="restartButton">
                         <img src="./img/icons_loop.png" alt="">
                     </button>
-                <div class="statusInCircle">${status}</div>`;
+                <div class="statusInCircle">${storageObj.status}</div>`;
 
         submitButton.style.display = 'none';
         resultCircle.style.display = 'flex';
-        resultCircle.style.borderColor = statusColor;
-        document.querySelector('#restartButton').style.background = statusColor;
-        document.querySelector('.statusInCircle').style.color = statusColor;
+        resultCircle.style.borderColor = bmiStatusColors[countBMIStatus].color;
+        document.querySelector('#restartButton').style.background = bmiStatusColors[countBMIStatus].color;
+        document.querySelector('.statusInCircle').style.color = bmiStatusColors[countBMIStatus].color;
         document.addEventListener('click', function (e) {
             if (e.target.id == 'restartButton' || e.target.parentNode.nodeName == 'BUTTON') {
                 resultCircle.style.display = 'none';
@@ -99,14 +97,6 @@ function submitCalculation() {
 
             }
         });
-
-        let storageObj = {
-            status: status,
-            bmi: bmi,
-            weight: weight,
-            height: height,
-            date: dateNowFormat
-        }
 
         storageArr.push(storageObj);
         localStorage.setItem('storageData', JSON.stringify(storageArr));
@@ -117,9 +107,54 @@ function submitCalculation() {
         updateResultsList();
 
     } else {
-        alert('請填寫完整或正確內容！')
+        let weightTtile = document.querySelector('#weightTtile');
+        let heightTtile = document.querySelector('#heightTtile');
+
+        if (!weight && !height) {
+            weightTtile.insertAdjacentHTML(`afterend`, `<h4 class="blankWarn"><div>▼</div>&nbsp請輸入體重！</h4>`);
+            heightTtile.insertAdjacentHTML(`afterend`, `<h4 class="blankWarn"><div>▼</div>&nbsp請輸入身高！</h4>`);
+        } else if (!height) {
+            heightTtile.insertAdjacentHTML(`afterend`, `<h4 class="blankWarn"><div>▼</div>&nbsp請輸入身高！</h4>`);
+        } else if (!weight) {
+            weightTtile.insertAdjacentHTML(`afterend`, `<h4 class="blankWarn"><div>▼</div>&nbsp請輸入體重！</h4>`);
+        }
     }
 
+}
+
+// 函式：BMI計算
+function countBMI(countCase) {
+    let bmi = (countCase.weight / Math.pow((countCase.height / 100), 2)).toFixed(2);
+
+    switch (!!bmi) {
+
+        case (bmi < 18.5):
+            countCase['bmi'] = bmi;
+            countCase['status'] = '過輕';
+            return 'underWeight';
+        case (bmi >= 18.5 && bmi < 24):
+            countCase['bmi'] = bmi;
+            countCase['status'] = '理想';
+            return 'normalRange';
+        case (bmi >= 24 && bmi < 27):
+            countCase['bmi'] = bmi;
+            countCase['status'] = '過重';
+            return 'obeseLevel01';
+        case (bmi >= 27 && bmi < 30):
+            countCase['bmi'] = bmi;
+            countCase['status'] = '輕度肥胖';
+            return 'obeseLevel02';
+        case (bmi >= 30 && bmi < 35):
+            countCase['bmi'] = bmi;
+            countCase['status'] = '中度肥胖';
+            return 'obeseLevel03';
+        case (bmi > 35):
+            countCase['bmi'] = bmi;
+            countCase['status'] = '重度肥胖';
+            return 'obeseLevel04';
+        default:
+            return '錯誤';
+    }
 }
 
 // 函式：更新紀錄列表
@@ -128,7 +163,7 @@ function updateResultsList() {
 
     for (let i = 0; i < storageArr.length; i++) {
         ResultsList += `
-            <li data-index="0" class="resultRow">
+            <li data-index="${i}" class="resultRow">
                 <div class="statusInRow">
                     ${storageArr[i].status}
                 </div>
@@ -168,7 +203,8 @@ function deleteSingleRow(e) {
     e.preventDefault();
     if (e.target.nodeName !== 'A') { return; }
 
-    let selectedIndex = e.target.dataset.index;
+    let listItem = e.target.closest('li.resultRow');
+    let selectedIndex = listItem.dataset.index;
     storageArr.splice(selectedIndex, 1);
 
     localStorage.setItem('storageData', JSON.stringify(storageArr));

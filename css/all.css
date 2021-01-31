@@ -35,6 +35,11 @@
     margin-left: 97px;
 }
 
+#inputBlock span{
+    display: inline-block;
+    width: 100px;
+}
+
 #inputBlock input{
     width: 100%;
     height: 40px;
@@ -52,6 +57,18 @@
 
 #inputBlock input:focus{
     outline: none;
+}
+
+.blankWarn{
+    display: inline-flex;
+    align-items: flex-end;
+    color: red;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.blankWarn div{
+    font-size: 12px;
 }
 
 #buttonAndResultBlock{
