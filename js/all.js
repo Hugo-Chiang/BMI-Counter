@@ -153,7 +153,7 @@ function countBMI(countCase) {
             countCase['status'] = '重度肥胖';
             return 'obeseLevel04';
         default:
-            return '錯誤';
+            return 'Error';
     }
 }
 
